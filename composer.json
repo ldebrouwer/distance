@@ -1,0 +1,30 @@
+{
+  "name": "ldebrouwer/distance",
+  "type": "library",
+  "description": "Distance helps you calculate the distance between GPS coordinates, in vanilla PHP. Pure and simple.",
+  "keywords": [
+    "distance",
+    "gps",
+    "location",
+    "coordinates",
+    "php",
+    "latitude",
+    "longitude"
+  ],
+  "homepage": "https://github.com/ldebrouwer/distance",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Luc De Brouwer",
+      "email": "info@lucdebrouwer.nl",
+      "homepage": "http://www.lucdebrouwer.nl",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.3"
+  },
+  "autoload": {
+    "psr-4": {"LucDeBrouwer\\Distance\\": "src/"}
+  }
+}
