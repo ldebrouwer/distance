@@ -18,23 +18,24 @@ class Distance
     private $formula = 'vincenty';
 
     /**
-     * The unit used to return the distance in. This can either be 'km' for kilometers, 'm' for meters,
-     * or 'mi' for miles.
+     * The unit used to return the distance in. The supported units are shown in the conversion table below.
      *
      * @var string
      */
     private $unit = 'km';
 
     /**
+     * An array holding the conversion table from meters to several other units.
+     * 
      * @var array
      */
     private $conversion = [
-        'cm' => '100',
-        'in' => '39.3700787',
-        'ft' => '3.2808399',
-        'm' => '1',
-        'km' => '0.001',
-        'mi' => '0.000621371192',
+        'cm' => '100', // centimeters
+        'in' => '39.3700787', // inches
+        'ft' => '3.2808399', // feet
+        'm' => '1', // meters
+        'km' => '0.001', // kilometers
+        'mi' => '0.000621371192', // miles
     ];
 
     /**
