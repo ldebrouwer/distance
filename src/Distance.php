@@ -29,9 +29,12 @@ class Distance
      * @var array
      */
     private $conversion = [
+        'cm' => '100',
+        'in' => '39.3700787',
+        'ft' => '3.2808399',
         'm' => '1',
         'km' => '0.001',
-        'mi' => '0.000621371192'
+        'mi' => '0.000621371192',
     ];
 
     /**
@@ -136,7 +139,7 @@ class Distance
      */
     public function setUnit($unit)
     {
-        if (!in_array($unit, ['km', 'm', 'mi'])) {
+        if (!in_array($unit, array_keys($this->getConversion()))) {
             throw new Exception('You have tried to set an invalid distance unit.');
         }
 

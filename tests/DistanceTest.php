@@ -28,7 +28,7 @@ class DistanceTest extends PHPUnit_Framework_TestCase
     {
         $distance = new Distance();
 
-        $distance->setUnit('ft');
+        $distance->setUnit('mm');
     }
 
     /**
@@ -84,5 +84,17 @@ class DistanceTest extends PHPUnit_Framework_TestCase
         $distance->setUnit('mi');
 
         $this->assertEquals(6.936987987488, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+
+        $distance->setUnit('cm');
+
+        $this->assertEquals(1116400, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+
+        $distance->setUnit('ft');
+
+        $this->assertEquals(36627.2966436, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+
+        $distance->setUnit('in');
+
+        $this->assertEquals(439527.5586068, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
     }
 }
