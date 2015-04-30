@@ -26,7 +26,7 @@ class Distance
 
     /**
      * An array holding the conversion table from meters to several other units.
-     * 
+     *
      * @var array
      */
     private $conversion = [
@@ -46,6 +46,7 @@ class Distance
      * @param float $latitudeB The latitude for point B.
      * @param float $longitudeB The longitude for point B.
      *
+     * @uses betweenVincenty
      * @throws Exception
      * @return float
      */
@@ -64,10 +65,10 @@ class Distance
     /**
      * Method that returns the distance between two GPS locations in meters according to the Vincenty formula.
      *
-     * @param $latitudeA
-     * @param $longitudeA
-     * @param $latitudeB
-     * @param $longitudeB
+     * @param float $latitudeA The latitude for point A.
+     * @param float $longitudeA The longitude for point A.
+     * @param float $latitudeB The latitude for point B.
+     * @param float $longitudeB The longitude for point B.
      *
      * @return float
      */
