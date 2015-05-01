@@ -67,13 +67,45 @@ class DistanceTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test the retrieval of the distance between the Apple and Google campuses.
+     * Test the retrieval of the distance between the Apple and Google campuses using the Vincenty formula.
      */
-    public function testDistanceBetweenAppleAndGoogle()
+    public function testDistanceBetweenAppleAndGoogleUsingVincenty()
     {
         $distance = new Distance();
         $distance->setUnit('m');
         $distance->setFormula('vincenty');
+
+        $this->assertEquals(11164, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+
+        $distance->setUnit('km');
+
+        $this->assertEquals(11.164, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+
+        $distance->setUnit('mi');
+
+        $this->assertEquals(6.936987987488, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+
+        $distance->setUnit('cm');
+
+        $this->assertEquals(1116400, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+
+        $distance->setUnit('ft');
+
+        $this->assertEquals(36627.2966436, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+
+        $distance->setUnit('in');
+
+        $this->assertEquals(439527.5586068, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+    }
+
+    /**
+     * Test the retrieval of the distance between the Apple and Google campuses using the Haversine formula.
+     */
+    public function testDistanceBetweenAppleAndGoogleUsingHaversine()
+    {
+        $distance = new Distance();
+        $distance->setUnit('m');
+        $distance->setFormula('haversine');
 
         $this->assertEquals(11164, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 

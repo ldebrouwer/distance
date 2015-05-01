@@ -47,6 +47,7 @@ class Distance
      * @param float $longitudeB The longitude for point B.
      *
      * @uses betweenVincenty
+     * @uses betweenHaversine
      * @throws Exception
      * @return float
      */
@@ -88,6 +89,29 @@ class Distance
     }
 
     /**
+     * Method that returns the distance between two GPS locations in meters according to the Haversine formula.
+     *
+     * @param float $latitudeA The latitude for point A.
+     * @param float $longitudeA The longitude for point A.
+     * @param float $latitudeB The latitude for point B.
+     * @param float $longitudeB The longitude for point B.
+     *
+     * @return float
+     */
+    private function betweenHaversine($latitudeA, $longitudeA, $latitudeB, $longitudeB)
+    {
+        $latitudeA = deg2rad($latitudeA);
+        $longitudeA = deg2rad($longitudeA);
+        $latitudeB = deg2rad($latitudeB);
+        $longitudeB = deg2rad($longitudeB);
+        $latDelta = $latitudeB - $latitudeA;
+        $longDelta = $longitudeB - $longitudeA;
+        $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) + cos($latitudeA) * cos($latitudeB) * pow(sin($longDelta / 2), 2)));
+
+        return floor($angle * 6371000);
+    }
+
+    /**
      * @param $distance
      * @return mixed
      */
@@ -115,7 +139,7 @@ class Distance
      */
     public function setFormula($formula)
     {
-        if (!in_array($formula, ['vincenty'])) {
+        if (!in_array($formula, ['vincenty', 'haversine'])) {
             throw new Exception('You have tried to set an invalid distance formula.');
         }
 
