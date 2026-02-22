@@ -3,7 +3,6 @@ parameters:
 	paths:
 		- src
 		- tests
-	tmpDir: /var/www/html/storage/phpstan-cache
 	reportUnmatchedIgnoredErrors: true
 
 includes:
