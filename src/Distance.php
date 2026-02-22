@@ -15,12 +15,12 @@ class Distance
     private Formula $formula = Formula::VINCENTY;
 
     /**
-     * The unit used to return the distance in. The supported units are shown in the conversion table below.
+     * The unit used to return the distance in.
      */
     private Unit $unit = Unit::KILOMETRES;
 
     /**
-     * Method that returns the distance between two GPS locations in the preferred unit according to the set formula.
+     * Returns the distance between two GPS locations in the preferred unit according to the set formula.
      */
     public function between(float $latitudeA, float $longitudeA, float $latitudeB, float $longitudeB): float
     {
@@ -33,7 +33,7 @@ class Distance
     }
 
     /**
-     * Method that returns the distance between two GPS locations in meters according to the Vincenty formula.
+     * Returns the distance between two GPS locations in meters according to the Vincenty formula.
      */
     private function betweenVincenty(float $latitudeA, float $longitudeA, float $latitudeB, float $longitudeB): float
     {
@@ -50,7 +50,7 @@ class Distance
     }
 
     /**
-     * Method that returns the distance between two GPS locations in meters according to the Haversine formula.
+     * Returns the distance between two GPS locations in meters according to the Haversine formula.
      */
     private function betweenHaversine(float $latitudeA, float $longitudeA, float $latitudeB, float $longitudeB): float
     {
@@ -81,9 +81,11 @@ class Distance
     /**
      * Sets the formula to be used for distance calculation.
      */
-    public function setFormula(Formula $formula): void
+    public function setFormula(Formula $formula): self
     {
         $this->formula = $formula;
+
+        return $this;
     }
 
     /**
@@ -97,8 +99,10 @@ class Distance
     /**
      * Sets the unit to be used when returning the distance between two coordinates.
      */
-    public function setUnit(Unit $unit): void
+    public function setUnit(Unit $unit): self
     {
         $this->unit = $unit;
+
+        return $this;
     }
 }
