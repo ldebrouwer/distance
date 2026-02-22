@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
+namespace Tests\LucDeBrouwer\Distance;
+
 use LucDeBrouwer\Distance\Distance;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 class DistanceTest extends TestCase
 {
@@ -20,7 +23,7 @@ class DistanceTest extends TestCase
     #[Test]
     public function willThrowExceptionInCaseWeSetAnInvalidUnit(): void
     {
-        $this->expectException(Exception::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('You have tried to set an invalid distance unit.');
 
         $distance = new Distance();
@@ -40,23 +43,12 @@ class DistanceTest extends TestCase
     #[Test]
     public function willThrowExceptionInCaseWeSetAnInvalidFormula(): void
     {
-        $this->expectException(Exception::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('You have tried to set an invalid distance formula.');
 
         $distance = new Distance();
 
         $distance->setFormula('Leonardo');
-    }
-
-    #[Test]
-    public function willThrowAnExceptionInCaseWeProvideInvalidParameters(): void
-    {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('One or more of the parsed variables are not valid floats.');
-
-        $distance = new Distance();
-
-        $distance->between('1', 1, 'not a float', 'invalid');
     }
 
     #[Test]

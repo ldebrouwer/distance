@@ -4,88 +4,62 @@ declare(strict_types=1);
 
 namespace LucDeBrouwer\Distance;
 
-use \Exception;
+use RuntimeException;
 
 /**
  * Distance helps you calculate the distance between GPS coordinates, in vanilla PHP. Pure and simple.
- *
- * @package LucDeBrouwer\Distance
  */
 class Distance
 {
-
     /**
      * The formula used for distance calculation.
-     *
-     * @var string
      */
-    private $formula = 'vincenty';
+    private string $formula = 'vincenty';
 
     /**
      * The unit used to return the distance in. The supported units are shown in the conversion table below.
-     *
-     * @var string
      */
-    private $unit = 'km';
+    private string $unit = 'km';
 
     /**
      * An array holding the conversion table from meters to several other units.
      *
-     * @var array
+     * @var array<string, int|float>
      */
-    private $conversion = [
-        'cm' => '100', // centimeters
-        'in' => '39.3700787', // inches
-        'ft' => '3.2808399', // feet
-        'm' => '1', // meters
-        'km' => '0.001', // kilometers
-        'mi' => '0.000621371192', // miles
+    private array $conversion = [
+        'cm' => 100, // centimeters
+        'in' => 39.3700787, // inches
+        'ft' => 3.2808399, // feet
+        'm' => 1, // meters
+        'km' => 0.001, // kilometers
+        'mi' => 0.000621371192, // miles
     ];
 
     /**
      * Method that returns the distance between two GPS locations in the preferred unit according to the set formula.
-     *
-     * @param float $latitudeA The latitude for point A.
-     * @param float $longitudeA The longitude for point A.
-     * @param float $latitudeB The latitude for point B.
-     * @param float $longitudeB The longitude for point B.
-     *
-     * @uses betweenVincenty
-     * @uses betweenHaversine
-     * @throws Exception
-     * @return float
      */
-    public function between($latitudeA, $longitudeA, $latitudeB, $longitudeB)
+    public function between(float $latitudeA, float $longitudeA, float $latitudeB, float $longitudeB): float
     {
-        if (!floatval($latitudeA) || !floatval($longitudeA) || !floatval($latitudeB) || !floatval($longitudeB)) {
-            throw new Exception('One or more of the parsed variables are not valid floats.');
-        }
-
-        $distanceInMeters = call_user_func_array([$this, 'between' . ucfirst($this->getFormula())],
-            [$latitudeA, $longitudeA, $latitudeB, $longitudeB]);
+        $distanceInMeters = match ($this->getFormula()) {
+            'vincenty' => $this->betweenVincenty($latitudeA, $longitudeA, $latitudeB, $longitudeB),
+            'haversine' => $this->betweenHaversine($latitudeA, $longitudeA, $latitudeB, $longitudeB),
+            default => throw new RuntimeException('Invalid formula'),
+        };
 
         return $this->convert($distanceInMeters);
     }
 
     /**
      * Method that returns the distance between two GPS locations in meters according to the Vincenty formula.
-     *
-     * @param float $latitudeA The latitude for point A.
-     * @param float $longitudeA The longitude for point A.
-     * @param float $latitudeB The latitude for point B.
-     * @param float $longitudeB The longitude for point B.
-     *
-     * @return float
      */
-    private function betweenVincenty($latitudeA, $longitudeA, $latitudeB, $longitudeB)
+    private function betweenVincenty(float $latitudeA, float $longitudeA, float $latitudeB, float $longitudeB): float
     {
         $latitudeA = deg2rad($latitudeA);
         $longitudeA = deg2rad($longitudeA);
         $latitudeB = deg2rad($latitudeB);
         $longitudeB = deg2rad($longitudeB);
         $longDelta = $longitudeB - $longitudeA;
-        $a = pow(cos($latitudeB) * sin($longDelta),
-                2) + pow(cos($latitudeA) * sin($latitudeB) - sin($latitudeA) * cos($latitudeB) * cos($longDelta), 2);
+        $a = ((cos($latitudeB) * sin($longDelta)) ** 2) + ((cos($latitudeA) * sin($latitudeB) - sin($latitudeA) * cos($latitudeB) * cos($longDelta)) ** 2);
         $b = sin($latitudeA) * sin($latitudeB) + cos($latitudeA) * cos($latitudeB) * cos($longDelta);
         $angle = atan2(sqrt($a), $b);
 
@@ -94,15 +68,8 @@ class Distance
 
     /**
      * Method that returns the distance between two GPS locations in meters according to the Haversine formula.
-     *
-     * @param float $latitudeA The latitude for point A.
-     * @param float $longitudeA The longitude for point A.
-     * @param float $latitudeB The latitude for point B.
-     * @param float $longitudeB The longitude for point B.
-     *
-     * @return float
      */
-    private function betweenHaversine($latitudeA, $longitudeA, $latitudeB, $longitudeB)
+    private function betweenHaversine(float $latitudeA, float $longitudeA, float $latitudeB, float $longitudeB): float
     {
         $latitudeA = deg2rad($latitudeA);
         $longitudeA = deg2rad($longitudeA);
@@ -110,26 +77,20 @@ class Distance
         $longitudeB = deg2rad($longitudeB);
         $latDelta = $latitudeB - $latitudeA;
         $longDelta = $longitudeB - $longitudeA;
-        $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) + cos($latitudeA) * cos($latitudeB) * pow(sin($longDelta / 2), 2)));
+        $angle = 2 * asin(sqrt((sin($latDelta / 2) ** 2) + cos($latitudeA) * cos($latitudeB) * (sin($longDelta / 2) ** 2)));
 
         return floor($angle * 6371000);
     }
 
-    /**
-     * @param $distance
-     * @return mixed
-     */
-    private function convert($distance)
+    private function convert(float $distance): float
     {
-        return $distance * $this->getConversion()[$this->getUnit()];
+        return $distance * $this->conversion[$this->getUnit()];
     }
 
     /**
      * Returns the currently set formula used for distance calculation.
-     *
-     * @return string
      */
-    public function getFormula()
+    public function getFormula(): string
     {
         return $this->formula;
     }
@@ -137,14 +98,12 @@ class Distance
     /**
      * Sets the formula to be used for distance calculation.
      *
-     * @param string $formula
-     *
-     * @throws Exception
+     * @throws RuntimeException
      */
-    public function setFormula($formula)
+    public function setFormula(string $formula): void
     {
-        if (!in_array($formula, ['vincenty', 'haversine'])) {
-            throw new Exception('You have tried to set an invalid distance formula.');
+        if (!in_array($formula, ['vincenty', 'haversine'], true)) {
+            throw new RuntimeException('You have tried to set an invalid distance formula.');
         }
 
         $this->formula = $formula;
@@ -152,10 +111,8 @@ class Distance
 
     /**
      * Returns the currently set unit used when returning the distance between two coordinates.
-     *
-     * @return string
      */
-    public function getUnit()
+    public function getUnit(): string
     {
         return $this->unit;
     }
@@ -163,27 +120,14 @@ class Distance
     /**
      * Sets the unit to be used when returning the distance between two coordinates.
      *
-     * @param string $unit
-     *
-     * @throws Exception
+     * @throws RuntimeException
      */
-    public function setUnit($unit)
+    public function setUnit(string $unit): void
     {
-        if (!in_array($unit, array_keys($this->getConversion()))) {
-            throw new Exception('You have tried to set an invalid distance unit.');
+        if (!array_key_exists($unit, $this->conversion)) {
+            throw new RuntimeException('You have tried to set an invalid distance unit.');
         }
 
         $this->unit = $unit;
     }
-
-    /**
-     * Gets the conversion table between different units.
-     *
-     * @return array
-     */
-    public function getConversion()
-    {
-        return $this->conversion;
-    }
-
 }
