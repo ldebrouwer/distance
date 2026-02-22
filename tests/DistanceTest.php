@@ -6,9 +6,9 @@ namespace Tests\LucDeBrouwer\Distance;
 
 use LucDeBrouwer\Distance\Distance;
 use LucDeBrouwer\Distance\Formula;
+use LucDeBrouwer\Distance\Unit;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
 
 class DistanceTest extends TestCase
 {
@@ -16,20 +16,9 @@ class DistanceTest extends TestCase
     public function canSetUnit(): void
     {
         $distance = new Distance();
-        $distance->setUnit('mi');
+        $distance->setUnit(Unit::MILES);
 
-        $this->assertSame('mi', $distance->getUnit());
-    }
-
-    #[Test]
-    public function willThrowExceptionInCaseWeSetAnInvalidUnit(): void
-    {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('You have tried to set an invalid distance unit.');
-
-        $distance = new Distance();
-
-        $distance->setUnit('mm');
+        $this->assertSame(Unit::MILES, $distance->getUnit());
     }
 
     #[Test]
@@ -45,28 +34,28 @@ class DistanceTest extends TestCase
     public function canConvertDistanceUsingVincentyFormula(): void
     {
         $distance = new Distance();
-        $distance->setUnit('m');
+        $distance->setUnit(Unit::METRES);
         $distance->setFormula(Formula::VINCENTY);
 
         $this->assertSame(11164.0, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
-        $distance->setUnit('km');
+        $distance->setUnit(Unit::KILOMETRES);
 
         $this->assertSame(11.164, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
-        $distance->setUnit('mi');
+        $distance->setUnit(Unit::MILES);
 
         $this->assertSame(6.936987987488, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
-        $distance->setUnit('cm');
+        $distance->setUnit(Unit::CENTIMETRES);
 
         $this->assertSame(1116400.0, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
-        $distance->setUnit('ft');
+        $distance->setUnit(Unit::FEET);
 
         $this->assertSame(36627.2966436, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
-        $distance->setUnit('in');
+        $distance->setUnit(Unit::INCHES);
 
         $this->assertSame(439527.5586068, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
     }
@@ -75,28 +64,28 @@ class DistanceTest extends TestCase
     public function canConvertDistanceUsingHaversineFormula(): void
     {
         $distance = new Distance();
-        $distance->setUnit('m');
+        $distance->setUnit(Unit::METRES);
         $distance->setFormula(Formula::HAVERSINE);
 
         $this->assertSame(11164.0, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
-        $distance->setUnit('km');
+        $distance->setUnit(Unit::KILOMETRES);
 
         $this->assertSame(11.164, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
-        $distance->setUnit('mi');
+        $distance->setUnit(Unit::MILES);
 
         $this->assertSame(6.936987987488, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
-        $distance->setUnit('cm');
+        $distance->setUnit(Unit::CENTIMETRES);
 
         $this->assertSame(1116400.0, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
-        $distance->setUnit('ft');
+        $distance->setUnit(Unit::FEET);
 
         $this->assertSame(36627.2966436, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
-        $distance->setUnit('in');
+        $distance->setUnit(Unit::INCHES);
 
         $this->assertSame(439527.5586068, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
     }

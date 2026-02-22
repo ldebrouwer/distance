@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace LucDeBrouwer\Distance;
 
-use RuntimeException;
-
 /**
  * Distance helps you calculate the distance between GPS coordinates, in vanilla PHP. Pure and simple.
  */
@@ -19,21 +17,7 @@ class Distance
     /**
      * The unit used to return the distance in. The supported units are shown in the conversion table below.
      */
-    private string $unit = 'km';
-
-    /**
-     * An array holding the conversion table from meters to several other units.
-     *
-     * @var array<string, int|float>
-     */
-    private array $conversion = [
-        'cm' => 100, // centimeters
-        'in' => 39.3700787, // inches
-        'ft' => 3.2808399, // feet
-        'm' => 1, // meters
-        'km' => 0.001, // kilometers
-        'mi' => 0.000621371192, // miles
-    ];
+    private Unit $unit = Unit::KILOMETRES;
 
     /**
      * Method that returns the distance between two GPS locations in the preferred unit according to the set formula.
@@ -83,7 +67,7 @@ class Distance
 
     private function convert(float $distance): float
     {
-        return $distance * $this->conversion[$this->getUnit()];
+        return $distance * $this->unit->multiplierFromMetres();
     }
 
     /**
@@ -96,8 +80,6 @@ class Distance
 
     /**
      * Sets the formula to be used for distance calculation.
-     *
-     * @throws RuntimeException
      */
     public function setFormula(Formula $formula): void
     {
@@ -107,22 +89,16 @@ class Distance
     /**
      * Returns the currently set unit used when returning the distance between two coordinates.
      */
-    public function getUnit(): string
+    public function getUnit(): Unit
     {
         return $this->unit;
     }
 
     /**
      * Sets the unit to be used when returning the distance between two coordinates.
-     *
-     * @throws RuntimeException
      */
-    public function setUnit(string $unit): void
+    public function setUnit(Unit $unit): void
     {
-        if (!array_key_exists($unit, $this->conversion)) {
-            throw new RuntimeException('You have tried to set an invalid distance unit.');
-        }
-
         $this->unit = $unit;
     }
 }
