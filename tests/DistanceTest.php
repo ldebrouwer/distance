@@ -1,132 +1,121 @@
 <?php
 
+declare(strict_types=1);
+
 use LucDeBrouwer\Distance\Distance;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class DistanceTest
- */
-class DistanceTest extends PHPUnit_Framework_TestCase
+class DistanceTest extends TestCase
 {
-
-    /**
-     * Test the setting and getting of the distance unit.
-     */
-    public function testUnit()
+    #[Test]
+    public function canSetUnit(): void
     {
         $distance = new Distance();
         $distance->setUnit('mi');
 
-        $this->assertEquals('mi', $distance->getUnit());
+        $this->assertSame('mi', $distance->getUnit());
     }
 
-    /**
-     * Test the throwing of an exception in case we try to set an invalid unit.
-     *
-     * @expectedException Exception
-     */
-    public function testInvalidUnit()
+    #[Test]
+    public function willThrowExceptionInCaseWeSetAnInvalidUnit(): void
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('You have tried to set an invalid distance unit.');
+
         $distance = new Distance();
 
         $distance->setUnit('mm');
     }
 
-    /**
-     * Test the setting and getting of the distance formula.
-     */
-    public function testFormula()
+    #[Test]
+    public function canSetFormula(): void
     {
         $distance = new Distance();
         $distance->setFormula('vincenty');
 
-        $this->assertEquals('vincenty', $distance->getFormula());
+        $this->assertSame('vincenty', $distance->getFormula());
     }
 
-    /**
-     * Test the throwing of an exception in case we try to set an invalid formula.
-     *
-     * @expectedException Exception
-     */
-    public function testInvalidFormula()
+    #[Test]
+    public function willThrowExceptionInCaseWeSetAnInvalidFormula(): void
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('You have tried to set an invalid distance formula.');
+
         $distance = new Distance();
 
         $distance->setFormula('Leonardo');
     }
 
-    /**
-     * Test the throwing of an exception in case an invalid parameter is being passed.
-     *
-     * @expectedException Exception
-     */
-    public function testInvalidParams()
+    #[Test]
+    public function willThrowAnExceptionInCaseWeProvideInvalidParameters(): void
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('One or more of the parsed variables are not valid floats.');
+
         $distance = new Distance();
 
         $distance->between('1', 1, 'not a float', 'invalid');
     }
 
-    /**
-     * Test the retrieval of the distance between the Apple and Google campuses using the Vincenty formula.
-     */
-    public function testDistanceBetweenAppleAndGoogleUsingVincenty()
+    #[Test]
+    public function canConvertDistanceUsingVincentyFormula(): void
     {
         $distance = new Distance();
         $distance->setUnit('m');
         $distance->setFormula('vincenty');
 
-        $this->assertEquals(11164, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+        $this->assertSame(11164.0, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
         $distance->setUnit('km');
 
-        $this->assertEquals(11.164, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+        $this->assertSame(11.164, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
         $distance->setUnit('mi');
 
-        $this->assertEquals(6.936987987488, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+        $this->assertSame(6.936987987488, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
         $distance->setUnit('cm');
 
-        $this->assertEquals(1116400, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+        $this->assertSame(1116400.0, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
         $distance->setUnit('ft');
 
-        $this->assertEquals(36627.2966436, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+        $this->assertSame(36627.2966436, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
         $distance->setUnit('in');
 
-        $this->assertEquals(439527.5586068, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+        $this->assertSame(439527.5586068, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
     }
 
-    /**
-     * Test the retrieval of the distance between the Apple and Google campuses using the Haversine formula.
-     */
-    public function testDistanceBetweenAppleAndGoogleUsingHaversine()
+    #[Test]
+    public function canConvertDistanceUsingHaversineFormula(): void
     {
         $distance = new Distance();
         $distance->setUnit('m');
         $distance->setFormula('haversine');
 
-        $this->assertEquals(11164, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+        $this->assertSame(11164.0, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
         $distance->setUnit('km');
 
-        $this->assertEquals(11.164, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+        $this->assertSame(11.164, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
         $distance->setUnit('mi');
 
-        $this->assertEquals(6.936987987488, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+        $this->assertSame(6.936987987488, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
         $distance->setUnit('cm');
 
-        $this->assertEquals(1116400, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+        $this->assertSame(1116400.0, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
         $distance->setUnit('ft');
 
-        $this->assertEquals(36627.2966436, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+        $this->assertSame(36627.2966436, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
         $distance->setUnit('in');
 
-        $this->assertEquals(439527.5586068, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
+        $this->assertSame(439527.5586068, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
     }
 }

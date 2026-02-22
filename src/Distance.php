@@ -1,4 +1,8 @@
-<?php namespace LucDeBrouwer\Distance;
+<?php
+
+declare(strict_types=1);
+
+namespace LucDeBrouwer\Distance;
 
 use \Exception;
 
