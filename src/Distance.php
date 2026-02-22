@@ -14,7 +14,7 @@ class Distance
     /**
      * The formula used for distance calculation.
      */
-    private string $formula = 'vincenty';
+    private Formula $formula = Formula::VINCENTY;
 
     /**
      * The unit used to return the distance in. The supported units are shown in the conversion table below.
@@ -41,9 +41,8 @@ class Distance
     public function between(float $latitudeA, float $longitudeA, float $latitudeB, float $longitudeB): float
     {
         $distanceInMeters = match ($this->getFormula()) {
-            'vincenty' => $this->betweenVincenty($latitudeA, $longitudeA, $latitudeB, $longitudeB),
-            'haversine' => $this->betweenHaversine($latitudeA, $longitudeA, $latitudeB, $longitudeB),
-            default => throw new RuntimeException('Invalid formula'),
+            Formula::VINCENTY => $this->betweenVincenty($latitudeA, $longitudeA, $latitudeB, $longitudeB),
+            Formula::HAVERSINE => $this->betweenHaversine($latitudeA, $longitudeA, $latitudeB, $longitudeB),
         };
 
         return $this->convert($distanceInMeters);
@@ -90,7 +89,7 @@ class Distance
     /**
      * Returns the currently set formula used for distance calculation.
      */
-    public function getFormula(): string
+    public function getFormula(): Formula
     {
         return $this->formula;
     }
@@ -100,12 +99,8 @@ class Distance
      *
      * @throws RuntimeException
      */
-    public function setFormula(string $formula): void
+    public function setFormula(Formula $formula): void
     {
-        if (!in_array($formula, ['vincenty', 'haversine'], true)) {
-            throw new RuntimeException('You have tried to set an invalid distance formula.');
-        }
-
         $this->formula = $formula;
     }
 

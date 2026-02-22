@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\LucDeBrouwer\Distance;
 
 use LucDeBrouwer\Distance\Distance;
+use LucDeBrouwer\Distance\Formula;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
@@ -35,20 +36,9 @@ class DistanceTest extends TestCase
     public function canSetFormula(): void
     {
         $distance = new Distance();
-        $distance->setFormula('vincenty');
+        $distance->setFormula(Formula::VINCENTY);
 
-        $this->assertSame('vincenty', $distance->getFormula());
-    }
-
-    #[Test]
-    public function willThrowExceptionInCaseWeSetAnInvalidFormula(): void
-    {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('You have tried to set an invalid distance formula.');
-
-        $distance = new Distance();
-
-        $distance->setFormula('Leonardo');
+        $this->assertSame(Formula::VINCENTY, $distance->getFormula());
     }
 
     #[Test]
@@ -56,7 +46,7 @@ class DistanceTest extends TestCase
     {
         $distance = new Distance();
         $distance->setUnit('m');
-        $distance->setFormula('vincenty');
+        $distance->setFormula(Formula::VINCENTY);
 
         $this->assertSame(11164.0, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
@@ -86,7 +76,7 @@ class DistanceTest extends TestCase
     {
         $distance = new Distance();
         $distance->setUnit('m');
-        $distance->setFormula('haversine');
+        $distance->setFormula(Formula::HAVERSINE);
 
         $this->assertSame(11164.0, $distance->between(37.331741, -122.030333, 37.422546, -122.084250));
 
