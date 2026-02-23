@@ -1,0 +1,83 @@
+name: Tests
+on: push
+
+jobs:
+  build-84:
+    name: Static analysis, unit tests, and linting on PHP 8.4
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup PHP 8.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v5
+        with:
+          path: ./vendor
+          key: composer-${{ runner.os }}-8.4
+
+      - name: Install dependencies
+        run: |
+          composer install
+
+      - name: Run PHPStan
+        run: |
+          ./vendor/bin/phpstan
+
+      - name: PHP Code Sniffer
+        run: |
+          ./vendor/bin/phpcs
+
+      - name: Run PHPUnit
+        run: |
+          ./vendor/bin/phpunit
+
+  build-85:
+    name: Static analysis, unit tests, and linting on PHP 8.5
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup PHP 8.5
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          tools: composer
+          coverage: pcov
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v5
+        with:
+          path: ./vendor
+          key: composer-${{ runner.os }}-8.5
+
+      - name: Install dependencies
+        run: |
+          composer install
+
+      - name: Run PHPStan
+        run: |
+          ./vendor/bin/phpstan
+
+      - name: PHP Code Sniffer
+        run: |
+          ./vendor/bin/phpcs
+
+      - name: Run PHPUnit
+        run: |
+          ./vendor/bin/phpunit --coverage-clover ./coverage.xml
+
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+          verbose: true
