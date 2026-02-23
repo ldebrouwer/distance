@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LucDeBrouwer\Distance;
+namespace ldebrouwer\Distance;
 
 enum Unit: string
 {

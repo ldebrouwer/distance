@@ -17,8 +17,7 @@
     {
       "name": "Luc De Brouwer",
       "email": "info@lucdebrouwer.nl",
-      "homepage": "http://www.lucdebrouwer.nl",
-      "role": "Developer"
+      "homepage": "http://www.lucdebrouwer.nl"
     }
   ],
   "require": {
@@ -40,12 +39,12 @@
   },
   "autoload": {
     "psr-4": {
-      "LucDeBrouwer\\Distance\\": "src/"
+      "ldebrouwer\\Distance\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\LucDeBrouwer\\Distance\\": "tests/"
+      "Tests\\ldebrouwer\\Distance\\": "tests/"
     }
   },
   "config": {

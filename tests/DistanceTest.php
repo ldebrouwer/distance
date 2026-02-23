@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\LucDeBrouwer\Distance;
+namespace Tests\ldebrouwer\Distance;
 
-use LucDeBrouwer\Distance\Distance;
-use LucDeBrouwer\Distance\Formula;
-use LucDeBrouwer\Distance\Unit;
+use ldebrouwer\Distance\Distance;
+use ldebrouwer\Distance\Formula;
+use ldebrouwer\Distance\Unit;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LucDeBrouwer\Distance;
+namespace ldebrouwer\Distance;
 
 /**
  * Distance helps you calculate the distance between GPS coordinates, in vanilla PHP. Pure and simple.
