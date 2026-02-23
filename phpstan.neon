@@ -1,0 +1,11 @@
+parameters:
+	level: max
+	paths:
+		- src
+		- tests
+	reportUnmatchedIgnoredErrors: true
+
+includes:
+	- vendor/phpstan/phpstan-phpunit/extension.neon
+	- vendor/phpstan/phpstan-strict-rules/rules.neon
+	- vendor/phpstan/phpstan/conf/bleedingEdge.neon

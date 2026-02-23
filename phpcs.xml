@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<ruleset name="Custom Standard">
+	<description>The coding standard for ldebrouwer/distance.</description>
+	<arg value="p"/><!--show phpunit-like progress-->
+	<arg name="colors"/>
+	<arg name="cache"/>
+	<file>src/</file>
+	<file>tests</file>
+
+	<rule ref="PSR12">
+		<exclude name="Generic.Files.LineLength"/>
+	</rule>
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+	<rule ref="Generic.PHP.ForbiddenFunctions">
+		<properties>
+			<property name="forbiddenFunctions" type="array">
+				<element key="sizeof" value="count"/>
+				<element key="delete" value="unset"/>
+				<element key="print" value="echo"/>
+				<element key="is_null" value="null"/>
+				<element key="create_function" value="null"/>
+				<element key="join" value="implode"/>
+			</property>
+		</properties>
+	</rule>
+	<rule ref="Squiz.WhiteSpace.FunctionOpeningBraceSpace"/>
+
+	<config name="installed_paths" value="../../slevomat/coding-standard"/>
+	<rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>
+	<rule ref="SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement"/>
+	<rule ref="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace"/>
+	<rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
+	<rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
+	<rule ref="SlevomatCodingStandard.Classes.ClassMemberSpacing">
+		<properties>
+			<property name="linesCountBetweenMembers" value="1"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Classes.ConstantSpacing">
+		<properties>
+			<property name="minLinesCountBeforeWithComment" value="0"/>
+			<property name="maxLinesCountBeforeWithComment" value="1"/>
+			<property name="minLinesCountBeforeWithoutComment" value="0"/>
+			<property name="maxLinesCountBeforeWithoutComment" value="1"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Classes.MethodSpacing">
+		<properties>
+			<property name="minLinesCount" value="1"/>
+			<property name="maxLinesCount" value="1"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Classes.PropertyDeclaration"/>
+	<rule ref="SlevomatCodingStandard.Classes.PropertySpacing">
+		<properties>
+			<property name="minLinesCountBeforeWithComment" value="0"/>
+			<property name="maxLinesCountBeforeWithComment" value="1"/>
+			<property name="minLinesCountBeforeWithoutComment" value="0"/>
+			<property name="maxLinesCountBeforeWithoutComment" value="1"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Classes.RequireConstructorPropertyPromotion"/>
+	<rule ref="SlevomatCodingStandard.Commenting.DocCommentSpacing">
+		<properties>
+			<property name="linesCountBeforeFirstContent" value="0"/>
+			<property name="linesCountAfterLastContent" value="0"/>
+		</properties>
+		<exclude name="SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectLinesCountBetweenDescriptionAndAnnotations"/>
+		<exclude name="SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectLinesCountBetweenDifferentAnnotationsTypes"/>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Commenting.EmptyComment" />
+	<rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">
+		<properties>
+			<property name="forbiddenAnnotations" type="array">
+				<element value="@package"/>
+			</property>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Commenting.ForbiddenComments">
+		<properties>
+			<property name="forbiddenCommentPatterns" type="array">
+				<element value="/Created by PhpStorm/"/>
+				<element value="/^Constructor\./"/>
+				<element value="/^Class \w+/"/>
+			</property>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration">
+		<properties>
+			<property name="allowAboveNonAssignment" value="true"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Commenting.UselessInheritDocComment"/>
+	<rule ref="SlevomatCodingStandard.Exceptions.DeadCatch"/>
+	<rule ref="SlevomatCodingStandard.Exceptions.RequireNonCapturingCatch"/>
+	<rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/>
+	<rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.DisallowGroupUse"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.MultipleUsesPerLine"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
+		<properties>
+			<property name="searchAnnotations" value="true"/>
+			<property name="ignoredAnnotations" type="array">
+				<element value="@group"/>
+			</property>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.UseSpacing">
+		<properties>
+			<property name="linesCountBeforeFirstUse" value="1"/>
+			<property name="linesCountBetweenUseTypes" value="1"/>
+			<property name="linesCountAfterLastUse" value="1"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.PHP.UselessSemicolon"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
+		<properties>
+			<property name="spacesCountAroundEqualsSign" value="0"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing">
+		<properties>
+			<property name="spacesCountBeforeColon" value="0"/>
+		</properties>
+	</rule>
+</ruleset>

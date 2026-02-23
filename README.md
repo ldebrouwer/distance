@@ -1,5 +1,5 @@
 # Distance
-[![Build Status](https://travis-ci.org/ldebrouwer/distance.svg)](https://travis-ci.org/ldebrouwer/distance)
+[![Tests](https://github.com/ldebrouwer/distance/actions/workflows/tests.yml/badge.svg)](https://github.com/ldebrouwer/distance/actions/workflows/tests.yml)
 [![Latest Stable Version](https://poser.pugx.org/ldebrouwer/distance/v/stable)](https://packagist.org/packages/ldebrouwer/distance)
 [![Total Downloads](https://poser.pugx.org/ldebrouwer/distance/downloads)](https://packagist.org/packages/ldebrouwer/distance)
 [![Latest Unstable Version](https://poser.pugx.org/ldebrouwer/distance/v/unstable)](https://packagist.org/packages/ldebrouwer/distance)
@@ -16,15 +16,20 @@ When using [Composer](https://getcomposer.org) you can always load in the latest
 ```bash
 {
     "require": {
-        "ldebrouwer/distance": "~0.2"
+        "ldebrouwer/distance": "^1.0"
     }
 }
 ```
 Check it out [on Packagist](https://packagist.org/packages/ldebrouwer/distance).
 
-## Documentation
+## Usage
 
-This is still on the to-do list. The code is pretty well documented though and should autocomplete in most IDEs.
+```php
+$distance = new Distance()
+    ->setFormula(Formula::HAVERSINE)
+    ->setUnit(Unit::KILOMETRES)
+    ->between(37.331741, -122.030333, 37.422546, -122.084250);
+```
 
 ## Still to come
 - Expanded unit support.
