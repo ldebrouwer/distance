@@ -24,7 +24,7 @@ class Distance
      */
     public function between(float $latitudeA, float $longitudeA, float $latitudeB, float $longitudeB): float
     {
-        $distanceInMeters = match ($this->getFormula()) {
+        $distanceInMeters = match ($this->formula) {
             Formula::VINCENTY => $this->betweenVincenty($latitudeA, $longitudeA, $latitudeB, $longitudeB),
             Formula::HAVERSINE => $this->betweenHaversine($latitudeA, $longitudeA, $latitudeB, $longitudeB),
         };
@@ -71,14 +71,6 @@ class Distance
     }
 
     /**
-     * Returns the currently set formula used for distance calculation.
-     */
-    public function getFormula(): Formula
-    {
-        return $this->formula;
-    }
-
-    /**
      * Sets the formula to be used for distance calculation.
      */
     public function setFormula(Formula $formula): self
@@ -86,14 +78,6 @@ class Distance
         $this->formula = $formula;
 
         return $this;
-    }
-
-    /**
-     * Returns the currently set unit used when returning the distance between two coordinates.
-     */
-    public function getUnit(): Unit
-    {
-        return $this->unit;
     }
 
     /**

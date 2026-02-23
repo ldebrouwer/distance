@@ -19,24 +19,6 @@ class DistanceTest extends TestCase
     private const float LONGITUDE_B = -122.084250;
 
     #[Test]
-    public function canSetUnit(): void
-    {
-        $distance = new Distance();
-        $distance->setUnit(Unit::MILES);
-
-        self::assertSame(Unit::MILES, $distance->getUnit());
-    }
-
-    #[Test]
-    public function canSetFormula(): void
-    {
-        $distance = new Distance();
-        $distance->setFormula(Formula::VINCENTY);
-
-        self::assertSame(Formula::VINCENTY, $distance->getFormula());
-    }
-
-    #[Test]
     #[TestWith([Unit::METRES, 11164.0])]
     #[TestWith([Unit::KILOMETRES, 11.164])]
     #[TestWith([Unit::MILES, 6.936987987488])]
